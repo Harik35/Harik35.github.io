@@ -13,6 +13,8 @@ pnpm dev
 
 Build with `pnpm build`. Deploy the `dist` directory to a static host such as Netlify. Preview a production build with `pnpm preview`. The world requires an HTTP server, not opening its HTML file directly. No backend or API key is needed.
 
+GitHub Pages deployment is handled by `.github/workflows/deploy-pages.yml`. In the repository's **Settings > Pages**, set **Source** to **GitHub Actions** once. Every later push to `main` builds and publishes `dist` automatically.
+
 ## Prototype controls
 
 - WASD or arrow keys: move relative to the fixed-direction follow camera.
