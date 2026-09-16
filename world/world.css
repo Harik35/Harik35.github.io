@@ -1,0 +1,61 @@
+:root { font-family: Arial, Helvetica, sans-serif; color: #fff; background: #182a2a; font-synthesis: none; }
+* { box-sizing: border-box; }
+body { margin: 0; }
+button,select,a { -webkit-tap-highlight-color: transparent; }
+button,select { font: inherit; }
+button,a,select { touch-action: manipulation; }
+button,a { color: inherit; }
+button { cursor: pointer; }
+button:focus-visible,a:focus-visible,select:focus-visible { outline: 3px solid #e9c575; outline-offset: 4px; }
+.world-app,.scene-host { position: fixed; inset: 0; overflow: hidden; }
+.scene-host canvas { display: block; width: 100%; height: 100%; touch-action: none; }
+.world-header { position: absolute; inset: 0 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 23px 32px; background: linear-gradient(#102125b0,transparent); pointer-events: none; }
+.world-header>* { pointer-events: auto; }
+.back { display: flex; align-items: center; gap: 10px; text-decoration: none; font-size: 14px; }
+.world-brand { display: flex; align-items: center; gap: 12px; font-size: 12px; line-height: 1.6; }
+.world-brand small { display: block; font-size: 10px; color: #c3cfc9; }
+.brand-emblem { display: grid; place-items: center; width: 38px; height: 38px; border: 1px solid #e0ded2aa; border-radius: 50%; font: italic 25px Georgia,serif; }
+.icon-button { border: 1px solid #ffffff35; background: #172c2db8; width: 42px; height: 42px; display: inline-grid; place-items: center; border-radius: 50%; flex-shrink: 0; }
+.world-caption { position: absolute; left: 32px; top: 111px; pointer-events: none; text-shadow: 0 2px 15px #122426; }
+.world-caption>span { font-size: 10px; color: #cfdfd8; }
+.world-caption h1 { font-size: 29px; line-height: 1.16; font-weight: 400; margin: 12px 0; }
+.world-caption em { font-family: Georgia,serif; color: #efd9a6; }
+.world-footer { position: absolute; bottom: 0; left: 0; right: 0; display: flex; align-items: center; gap: 24px; padding: 17px 32px; background: linear-gradient(transparent,#102125c9); font-size: 10px; }
+.world-footer b { margin: 0 10px; font-weight: 400; color: #e9c575; }
+.world-footer .icon-button { margin-left: auto; }
+.prototype { color: #c3cfc9; }
+.world-menu { position: absolute; right: 32px; top: 84px; width: 285px; max-height: calc(100dvh - 170px); overflow: auto; background: #163133f5; border: 1px solid #82989566; padding: 24px; border-radius: 6px; }
+.world-menu h2 { font: 26px Georgia,serif; margin: 0 0 18px; }
+.world-menu>button,.world-menu label { display: flex; justify-content: space-between; align-items: center; gap: 10px; width: 100%; background: none; border: 0; border-bottom: 1px solid #ffffff20; padding: 16px 0; font-size: 13px; text-align: left; }
+.world-menu select { min-width: 0; max-width: 110px; background: #163133; color: white; border: 1px solid #829895; padding: 6px; }
+.world-menu small { display: block; color: #acc2ba; margin-top: 18px; }
+.interact { position: absolute; bottom: 90px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 16px; padding: 15px 22px; background: #fcf7e8; color: #173131; border: 0; border-radius: 4px; box-shadow: 0 8px 30px #0004; white-space: nowrap; }
+kbd { border: 1px solid #728782; padding: 3px 7px; border-radius: 3px; }
+.loading { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; flex-direction: column; padding: 32px; background: #182e2f; text-align: center; }
+.loading h1 { font: 38px Georgia,serif; max-width: 100%; }
+.loading p { color: #c4d2cb; max-width: 500px; line-height: 1.7; }
+.loading progress { width: 160px; height: 4px; accent-color: #e5c37c; }
+.action { padding: 12px 22px; margin: 10px; border: 1px solid #c4d2cb; background: none; text-decoration: none; }
+.exhibit-dialog { width: min(760px,calc(100vw - 32px)); max-height: 86dvh; padding: 0; border: 0; border-radius: 6px; background: #f7f7f2; color: #233431; }
+.exhibit-dialog::backdrop { background: #081c22a8; backdrop-filter: blur(5px); }
+.exhibit-sheet { padding: 28px 38px 40px; }
+.exhibit-sheet>header { display: flex; justify-content: space-between; align-items: center; font-size: 11px; color: #56756e; }
+.exhibit-sheet .icon-button { color: #233431; background: #e4ebe5; border: 0; }
+.exhibit-sheet h2 { font: 38px Georgia,serif; margin: 23px 0; }
+.exhibit-sheet p,.exhibit-sheet li { font-size: 15px; line-height: 1.8; }
+.portfolio-content .role { list-style: none; border-bottom: 1px solid #cad3c9; padding: 22px 0; }
+.experience-list { padding: 0; }
+.portfolio-content .role-when { font-size: 12px; color: #517165; }
+.role-when span,.role-at { display: block; margin-top: 6px; }
+.portfolio-content h3 { font-size: 23px; }
+.role-at { font-size: 17px; font-weight: 400; }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.tags span { font-size: 12px; padding: 6px 9px; background: #e0e8df; border-radius: 3px; }
+.case-eyebrow,.case-meta dt,.case-section h4 { color: #517165; font-size: 12px; }
+.case-meta { display: grid; gap: 15px; }
+.case-meta dd { margin: 5px 0 0; }
+hr { border: 0; border-top: 1px solid #cad3c9; margin: 35px 0; }
+.contact-actions a { display: flex; align-items: center; justify-content: space-between; padding: 18px 0; border-bottom: 1px solid #cad3c9; text-decoration: none; }
+.touch-pad { display: none; }
+@media (pointer: coarse) { .touch-pad { display: grid; position: absolute; bottom: 88px; left: 18px; grid-template-columns: repeat(3,42px); gap: 5px; } .touch-pad button { display: grid; place-items: center; width: 42px; height: 42px; color: white; background: #173131bd; border: 1px solid #ffffff55; border-radius: 6px; touch-action: none; } .touch-pad button:first-child { grid-column: 2; } .touch-pad button:nth-child(2) { grid-column: 1; } }
+@media (max-width: 600px) { .world-header { padding: 17px; gap: 12px; } .world-brand { font-size: 10px; gap: 8px; } .world-brand small { display: none; } .back span { display: none; } .world-caption { left: 20px; top: 92px; } .world-caption h1 { font-size: 23px; } .world-footer { padding: 14px 18px; gap: 10px; } .prototype { display: none; } .world-menu { right: 16px; } .exhibit-sheet { padding: 22px; } .exhibit-sheet h2 { font-size: 30px; } .interact { bottom: 235px; max-width: calc(100% - 28px); gap: 10px; } }

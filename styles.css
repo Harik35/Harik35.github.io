@@ -56,6 +56,15 @@ a:focus-visible { outline: 3px solid var(--accent); outline-offset: 6px; }
 .scroll-cue span:first-child { font-size: 16px; }
 .edition { position: absolute; z-index: 6; bottom: 26px; right: 3%; color: #61674f; font-size: 9px; }
 
+.hero-actions { display: grid; grid-template-columns: max-content max-content; gap: 12px; }
+.hero-actions .resume-link { grid-column: 1 / -1; }
+.world-link { background: var(--ink); border-color: var(--ink); }
+.world-link:hover { background: #405044; }
+@media (max-width: 600px) {
+  .hero-actions { grid-template-columns: max-content; }
+  .hero-actions .world-link { min-height: 36px; padding-top: 10px; padding-bottom: 10px; }
+}
+
 /* ---------- 3. Sections ---------- */
 main { position: relative; z-index: 10; }
 .experience { position: relative; padding: 85px 6% 80px; background: #f7f5ec; border-top: 1px solid var(--line); box-shadow: 0 -16px 40px #262b2507; }
@@ -173,7 +182,7 @@ footer { display: flex; justify-content: space-between; gap: 15px; padding: 22px
   .subline { bottom: 28%; width: 43%; }
   .subline p { font-size: 13px; line-height: 1.65; }
   .subline .stack { font-size: 9px; line-height: 1.8; max-width: 125px; margin-top: 15px; }
-  .hero-actions { bottom: 12%; gap: 15px; align-items: flex-start; flex-direction: column; }
+  .hero-actions { bottom: 8%; gap: 10px; align-items: flex-start; flex-direction: column; }
   .button { min-height: 48px; gap: 26px; padding: 15px 18px; font-size: 11px; }
   .resume-link { font-size: 10px; }
   .scroll-cue { bottom: 27px; font-size: 8px; }
