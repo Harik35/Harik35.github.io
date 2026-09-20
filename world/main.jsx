@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { ArrowLeft, ArrowUp, ArrowDown, ArrowRight, X, RotateCcw, Map, SlidersHorizontal, Footprints } from 'lucide-react';
 import { createWorld, exhibits } from './scene.js';
 import './world.css';
+import { personalAsset, posters } from './personal-stalls.js';
 
 function App() {
   const canvasHost = useRef(null);
@@ -60,6 +61,7 @@ function App() {
       {(active === 'experience' || active === 'projects') && (!content ? <p>Loading the collection...</p> : content.error ? <p>{content.error} <a href="/">Read the portfolio</a></p> : active === 'experience' ? <ol className="portfolio-content experience-list" dangerouslySetInnerHTML={{ __html: content.experience }} /> : <div className="portfolio-content" dangerouslySetInnerHTML={{ __html: content.projects }} />)}
       {active === 'about' && <><p>I'm Harikrishnan, a software engineer based in Bengaluru, India. I build enterprise software from the API to the interface.</p><p>My work spans .NET, Angular, SQL Server, and Azure, with experience in distributed systems and an interest in enterprise AI.</p></>}
       {active === 'contact' && <div className="contact-actions"><p>Let's build something thoughtful.</p><a href="mailto:haripm.krishnan@gmail.com">Email me <ArrowRight size={18} /></a><a href="https://www.linkedin.com/in/harikrishnan-pm/" target="_blank" rel="noreferrer">LinkedIn <ArrowRight size={18} /></a><a href="https://github.com/Harik35" target="_blank" rel="noreferrer">GitHub <ArrowRight size={18} /></a><a href="/Harikrishnan_PM_EY_GDS%20(1).pdf" download>Download resume <ArrowDown size={18} /></a></div>}
+      {active === 'fun' && <><p>Marvel & Game of Thrones. A few favorite characters from other worlds.</p><div className="poster-gallery">{posters.map(poster => <figure key={poster.file}><img src={personalAsset(poster.file)} alt={poster.name} loading="lazy" /><figcaption><strong>{poster.name}</strong><span>{poster.collection}</span></figcaption></figure>)}</div></>}
       </div>
     </dialog>
   </main>;

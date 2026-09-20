@@ -2,12 +2,14 @@ import * as THREE from 'three';
 import { FBXLoader } from 'three/addons/loaders/FBXLoader.js';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import { createPhysics } from './physics.js';
+import { loadPersonalArtwork, decoratePersonalStall } from './personal-stalls.js';
 
 export const exhibits = [
   { id: 'experience', number: '01', title: 'Experience', x: -7, z: -8, angle: 0, color: '#377c79', subtitle: 'PLACES / PEOPLE / IMPACT' },
   { id: 'projects', number: '02', title: 'Skills & Projects', x: 7, z: -8, angle: 0, color: '#be6856', subtitle: 'IDEAS INTO REALITY' },
   { id: 'about', number: '03', title: 'About me', x: -11, z: 3, angle: Math.PI / 2, color: '#667aab', subtitle: 'A LITTLE LOGIC. A LOT OF CARE.' },
-  { id: 'contact', number: '04', title: 'Get in touch', x: 11, z: 3, angle: -Math.PI / 2, color: '#74895e', subtitle: 'LET\'S BUILD SOMETHING.' }
+  { id: 'contact', number: '04', title: 'Get in touch', x: 11, z: 3, angle: -Math.PI / 2, color: '#74895e', subtitle: 'LET\'S BUILD SOMETHING.' },
+  { id: 'fun', number: '05', title: 'Fun part', x: 0, z: -10, angle: 0, color: '#ad6a88', subtitle: 'MOVIES / SERIES / CHARACTERS / DIALOGUES' }
 ];
 
 export async function createWorld(host, callbacks) {
@@ -98,21 +100,27 @@ export async function createWorld(host, callbacks) {
   for(const x of [-2.3,2.3]) cylinder(scene,x,6.65,-1,.022,.022,2.3,'#365352',6);
   label(scene,'GOOD STORIES. BETTER HUMANS.',0,6.3,-2,6,1,'#f5efda','#254c4b');
 
+  callbacks.onStatus('Hanging the collection');
+  const artwork = await loadPersonalArtwork();
   exhibits.forEach((exhibit,index) => {
+    const personalized = exhibit.id === 'experience' || exhibit.id === 'fun';
     const booth=new THREE.Group(); booth.position.set(exhibit.x,0,exhibit.z); booth.rotation.y=exhibit.angle; scene.add(booth);
     box(booth,0,1.9,-1,5.9,3.8,.3,exhibit.color);
     box(booth,0,3.6,.35,6.2,.6,3.1,'#294b4b');
     box(booth,0,3.25,1.8,5.9,.05,.06,'#ffdf9c',true);
-    label(booth,exhibit.title.toUpperCase(),0,3.63,1.94,5.5,.65);
-    label(booth,exhibit.subtitle,0,2.8,-.81,4.8,.45,'#ffffff');
+    if (!personalized) {
+      label(booth,exhibit.title.toUpperCase(),0,3.63,1.94,5.5,.65);
+      label(booth,exhibit.subtitle,0,2.8,-.81,4.8,.45,'#ffffff');
+    }
     box(booth,0,.77,.3,4.8,.13,1.2,'#d9c7a1');
     for(const x of [-2.1,2.1]) box(booth,x,.37,.3,.12,.75,.8,'#365352');
-    for(const x of [-1.2,1.2]) {
+    if (personalized) decoratePersonalStall(booth, exhibit.id, artwork, { box, label });
+    for(const x of personalized ? [] : [-1.2,1.2]) {
       box(booth,x,1.32,.19,1.2,.77,.08,'#25383d'); box(booth,x,1.32,.245,1.08,.64,.02,index===1?'#70acbc':'#e4debd');
       box(booth,x,.99,.2,.05,.35,.05,'#25383d');
       for(let j=0;j<4;j++) box(booth,x-.3,1.5-j*.12,.27,.55+(j%2)*.25,.022,.012,index===1?'#c6dfd6':'#789a87');
     }
-    for(let i=0;i<5;i++) box(booth,-2.1+i*.13,1.02,.3,.1,.4+(i%3)*.06,.28,['#315d69','#ae644b','#c0ac78'][i%3]);
+    if (!personalized) for(let i=0;i<5;i++) box(booth,-2.1+i*.13,1.02,.3,.1,.4+(i%3)*.06,.28,['#315d69','#ae644b','#c0ac78'][i%3]);
     plant(booth,2.4,1.5,.85);
     const marker=cylinder(booth,0,.025,3.1,.85,.85,.04,exhibit.color,40);
     label(booth,exhibit.number,0,.06,3.1,.7,.7).rotation.x=-Math.PI/2;

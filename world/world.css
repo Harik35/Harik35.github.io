@@ -57,5 +57,11 @@ kbd { border: 1px solid #728782; padding: 3px 7px; border-radius: 3px; }
 hr { border: 0; border-top: 1px solid #cad3c9; margin: 35px 0; }
 .contact-actions a { display: flex; align-items: center; justify-content: space-between; padding: 18px 0; border-bottom: 1px solid #cad3c9; text-decoration: none; }
 .touch-pad { display: none; }
+.poster-gallery { display: grid; grid-template-columns: repeat(auto-fit,minmax(min(100%,160px),1fr)); gap: 24px 18px; }
+.poster-gallery figure { margin: 0; min-width: 0; }
+.poster-gallery img { display: block; width: 100%; aspect-ratio: 2 / 3; object-fit: contain; background: #211f26; }
+.poster-gallery figcaption { padding-top: 10px; line-height: 1.5; overflow-wrap: anywhere; }
+.poster-gallery strong { display: block; font-size: 14px; }
+.poster-gallery span { font-size: 12px; color: #56756e; }
 @media (pointer: coarse) { .touch-pad { display: grid; position: absolute; bottom: 88px; left: 18px; grid-template-columns: repeat(3,42px); gap: 5px; } .touch-pad button { display: grid; place-items: center; width: 42px; height: 42px; color: white; background: #173131bd; border: 1px solid #ffffff55; border-radius: 6px; touch-action: none; } .touch-pad button:first-child { grid-column: 2; } .touch-pad button:nth-child(2) { grid-column: 1; } }
 @media (max-width: 600px) { .world-header { padding: 17px; gap: 12px; } .world-brand { font-size: 10px; gap: 8px; } .world-brand small { display: none; } .back span { display: none; } .world-caption { left: 20px; top: 92px; } .world-caption h1 { font-size: 23px; } .world-footer { padding: 14px 18px; gap: 10px; } .prototype { display: none; } .world-menu { right: 16px; } .exhibit-sheet { padding: 22px; } .exhibit-sheet h2 { font-size: 30px; } .interact { bottom: 235px; max-width: calc(100% - 28px); gap: 10px; } }
