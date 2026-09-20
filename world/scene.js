@@ -3,6 +3,7 @@ import { FBXLoader } from 'three/addons/loaders/FBXLoader.js';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import { createPhysics } from './physics.js';
 import { loadPersonalArtwork, decoratePersonalStall } from './personal-stalls.js';
+import { loadCenterDisplay, CENTER_DISPLAY_ROTATION_SPEED } from './center-display.js';
 
 export const exhibits = [
   { id: 'experience', number: '01', title: 'Experience', x: -7, z: -8, angle: 0, color: '#377c79', subtitle: 'PLACES / PEOPLE / IMPACT' },
@@ -89,16 +90,8 @@ export async function createWorld(host, callbacks) {
     }
   }
   for(const x of [-12,-3.5,3.5,12]) plant(scene,x,-10,1.5);
-  cylinder(scene,0,.16,-1,3.5,3.6,.32,'#799084',64);
-  cylinder(scene,0,.43,-1,2.7,2.9,.55,'#e1d4b6',48);
-  cylinder(scene,0,.74,-1,2.1,2.1,.2,'#365b4d',48);
-  for(let i=0;i<9;i++) plant(scene,Math.sin(i*2.4)*1.45,-1+Math.cos(i*2.4)*1.45,.85);
-  box(scene,0,1.15,.85,3.8,1.4,.22,'#254c4b');
-  label(scene,'A brighter you.',0,1.34,1,3.5,.7);
-  label(scene,'EXPLORE. BUILD. ENJOY.',0,.91,1,3,.27,'#cddfcf');
   const ring = new THREE.Mesh(new THREE.TorusGeometry(3.2,.055,8,80),material('#ffdf9c',true)); ring.rotation.x=Math.PI/2; ring.position.set(0,5.5,-1); scene.add(ring);
   for(const x of [-2.3,2.3]) cylinder(scene,x,6.65,-1,.022,.022,2.3,'#365352',6);
-  label(scene,'GOOD STORIES. BETTER HUMANS.',0,6.3,-2,6,1,'#f5efda','#254c4b');
 
   callbacks.onStatus('Hanging the collection');
   const artwork = await loadPersonalArtwork();
@@ -145,7 +138,7 @@ export async function createWorld(host, callbacks) {
   }
   const playerBody=movement.body;
   const avatar=new THREE.Group(); avatar.rotation.y=Math.PI; scene.add(avatar);
-  const keys=new Set(), taps=new Set(); let stopped=false,paused=false,near=null,frame=0,animation='idle',mixer,actions={};
+  const keys=new Set(), taps=new Set(); let stopped=false,paused=false,near=null,frame=0,animation='idle',mixer,actions={},centerDisplayGroup;
   const clock=new THREE.Clock(); const direction=new THREE.Vector3();
   let frames=0, elapsed=0;
   const listen=(target,type,fn,options) => { target.addEventListener(type,fn,options); cleanups.push(()=>target.removeEventListener(type,fn,options)); };
@@ -155,8 +148,10 @@ export async function createWorld(host, callbacks) {
     const textures=new Set(); scene.traverse(o=> { o.geometry?.dispose(); for(const m of Array.isArray(o.material)?o.material:[o.material]) if(m) { for(const value of Object.values(m)) if(value?.isTexture) textures.add(value); m.dispose(); } }); textures.forEach(t=>t.dispose());
   };
   function dispose() { stopped=true; cancelAnimationFrame(frame); observer.disconnect(); cleanups.forEach(fn=>fn()); mixer?.stopAllAction(); resources(); physics.free(); renderer.dispose(); renderer.domElement.remove(); }
-  callbacks.onStatus('Preparing Skater Male');
   try {
+    callbacks.onStatus('Preparing the Camaro display');
+    centerDisplayGroup=await loadCenterDisplay(); scene.add(centerDisplayGroup);
+    callbacks.onStatus('Preparing Skater Male');
     const loader=new FBXLoader(); const base='/world-assets/kenney/';
     const [model,idle,run,skin]=await Promise.all([loader.loadAsync(base+'Model/characterMedium.fbx'),loader.loadAsync(base+'Animations/idle.fbx'),loader.loadAsync(base+'Animations/run.fbx'),new THREE.TextureLoader().loadAsync(base+'Skins/skaterMaleA.png')]);
     skin.colorSpace=THREE.SRGBColorSpace; skin.magFilter=THREE.NearestFilter;
@@ -171,7 +166,7 @@ export async function createWorld(host, callbacks) {
       actions[name]=mixer.clipAction(animationClip); actions[name].play(); actions[name].setEffectiveWeight(name==='idle'?1:0);
       source.traverse(o=> { o.geometry?.dispose(); });
     }
-  } catch(e) { dispose(); throw new Error('The avatar could not load. Please retry or return to the portfolio. '+e.message); }
+  } catch(e) { dispose(); throw new Error('A world model could not load. Please retry or return to the portfolio. '+e.message); }
   const mapping={KeyW:'forward',ArrowUp:'forward',KeyS:'backward',ArrowDown:'backward',KeyA:'left',ArrowLeft:'left',KeyD:'right',ArrowRight:'right'};
   const keyDirection=e=>mapping[e.code]||({w:'forward',s:'backward',a:'left',d:'right',ArrowUp:'forward',ArrowDown:'backward',ArrowLeft:'left',ArrowRight:'right'})[e.key];
   listen(window,'keydown',e=> {
@@ -189,6 +184,7 @@ export async function createWorld(host, callbacks) {
   function animate() {
     if(stopped) return; frame=requestAnimationFrame(animate);
     const realDelta=clock.getDelta(); const dt=Math.min(realDelta,.05); if(document.hidden) return;
+    centerDisplayGroup.rotation.y += CENTER_DISPLAY_ROTATION_SPEED * dt;
     // Preserve short key taps that begin and end between two rendered frames.
     const pressed=key=>keys.has(key)||taps.has(key);
     direction.set(Number(pressed('right'))-Number(pressed('left')),0,Number(pressed('backward'))-Number(pressed('forward')));

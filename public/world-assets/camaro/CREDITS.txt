@@ -1,0 +1,9 @@
+1967 Chevrolet Camaro SS by OUTPISTON
+Creator: https://sketchfab.com/outpiston
+Source: https://sketchfab.com/3d-models/1967-chevrolet-camaro-ss-3016d29e5dd54e40b92a9898476c3ccc
+License: Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International
+https://creativecommons.org/licenses/by-nc-sa/4.0/
+
+Original GLB preserved. Runtime adaptations: size and position normalization,
+opaque geometry merged by material, tinted transparency in place of transmission,
+and adjusted roughness. These model adaptations are provided under CC BY-NC-SA 4.0.

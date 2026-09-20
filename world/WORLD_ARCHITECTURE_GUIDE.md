@@ -279,7 +279,7 @@ The same data drives both systems:
 - Three.js loops through it to build booths at [`scene.js:102`](./scene.js#L102).
 - React loops through it to build the directory at [`main.jsx:53`](./main.jsx#L53).
 - React finds titles/numbers for prompts and dialogs at [`main.jsx:54`](./main.jsx#L54), [`main.jsx:58`](./main.jsx#L58), and [`main.jsx:59`](./main.jsx#L59).
-- Rapier loops through it to build matching booth colliders at [`physics.js:12`](./physics.js#L12).
+- Rapier loops through it to build matching booth colliders at [`physics.js:16`](./physics.js#L16).
 
 This is similar to rendering both a list component and a map marker layer from the same API response.
 
@@ -516,11 +516,14 @@ The following invisible blockers are created:
 | Left/right perimeter walls | [`physics.js:9`](./physics.js#L9) |
 | Front/back perimeter walls | [`physics.js:10`](./physics.js#L10) |
 | Center planter cylinder | [`physics.js:11`](./physics.js#L11) |
-| One cuboid per booth | [`physics.js:12`](./physics.js#L12) |
+| Round car podium cylinder | [`physics.js:12`](./physics.js#L12) through [`physics.js:15`](./physics.js#L15) |
+| One cuboid per booth | [`physics.js:16`](./physics.js#L16) |
 
 Rapier's `cuboid()` expects **half extents**, so `solid()` divides visual width/depth by two at [`physics.js:7`](./physics.js#L7).
 
 Booth collider width/depth swap when `e.angle` is nonzero at [`physics.js:12`](./physics.js#L12). This matches booths rotated 90 degrees. It is a simplified condition: it is correct for the current `0`, `Math.PI / 2`, and `-Math.PI / 2` angles, but a freely rotated booth would need a rotated collider rather than only swapping dimensions.
+
+The car podium uses a Rapier cylinder at [`physics.js:13`](./physics.js#L13) through [`physics.js:15`](./physics.js#L15). Its radius comes from `centerDisplay.width / 2`, matching the round Three.js podium. The large vertical half-height keeps the player blocked by the podium even though the world currently has no jumping or gravity.
 
 ### 8.4 Player rigid body and collider
 

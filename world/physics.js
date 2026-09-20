@@ -1,4 +1,5 @@
 import RAPIER from '@dimforge/rapier3d-compat';
+import { centerDisplay } from './center-display.js';
 
 export async function createPhysics(exhibits) {
   await RAPIER.init();
@@ -8,7 +9,10 @@ export async function createPhysics(exhibits) {
   );
   solid(-14, 0, .5, 28); solid(14, 0, .5, 28);
   solid(0, -13, 28, .5); solid(0, 13, 28, .5);
-  world.createCollider(RAPIER.ColliderDesc.cylinder(.8, 2.9).setTranslation(0, .8, -1));
+  const c = centerDisplay;
+  // Match the round visual podium: cylinder() takes half-height and radius.
+  world.createCollider(RAPIER.ColliderDesc.cylinder(2, c.width / 2)
+    .setTranslation(c.x, 2, c.z));
   for (const e of exhibits) solid(e.x, e.z, e.angle ? 2.6 : 6, e.angle ? 6 : 2.6);
   const body = world.createRigidBody(RAPIER.RigidBodyDesc.kinematicPositionBased().setTranslation(0, 1, 8));
   const collider = world.createCollider(RAPIER.ColliderDesc.capsule(.55, .3), body);

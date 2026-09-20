@@ -57,6 +57,7 @@ kbd { border: 1px solid #728782; padding: 3px 7px; border-radius: 3px; }
 hr { border: 0; border-top: 1px solid #cad3c9; margin: 35px 0; }
 .contact-actions a { display: flex; align-items: center; justify-content: space-between; padding: 18px 0; border-bottom: 1px solid #cad3c9; text-decoration: none; }
 .touch-pad { display: none; }
+.model-credit { position: absolute; bottom: 76px; right: 20px; max-width: calc(100% - 40px); padding: 10px; background: #163133; font-size: 12px; }
 .poster-gallery { display: grid; grid-template-columns: repeat(auto-fit,minmax(min(100%,160px),1fr)); gap: 24px 18px; }
 .poster-gallery figure { margin: 0; min-width: 0; }
 .poster-gallery img { display: block; width: 100%; aspect-ratio: 2 / 3; object-fit: contain; background: #211f26; }
